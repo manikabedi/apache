@@ -1,0 +1,41 @@
+node 'ubuntuhost.example.com' {
+  $adminemail = 'webmaster@example.com'
+  $servername = 'hostname.example.com'
+
+  include accounts
+  include apache
+  include apache::vhosts
+
+  resources { 'firewall':
+    purge => true,
+  }
+
+  Firewall {
+    before        => Class['firewall::post'],
+    require       => Class['firewall::pre'],
+  }
+
+  class { ['firewall::pre', 'firewall::post']: }
+
+  }
+
+node 'centoshost.example.com' {
+  $adminemail = 'webmaster@example.com'
+  $servername = 'hostname.example.com'
+
+  include accounts
+  include apache
+  include apache::vhosts
+
+  resources { 'firewall':
+    purge => true,
+  }
+
+  Firewall {
+    before        => Class['firewall::post'],
+    require       => Class['firewall::pre'],
+  }
+
+  class { ['firewall::pre', 'firewall::post']: }
+
+  }
